@@ -1,12 +1,13 @@
 {-# LANGUAGE FlexibleInstances, MultiParamTypeClasses #-}
 module Semantics.SimPOL.Management where
-import Language.POL.Syntax
+import Language.POL.Syntax as POL
 import Semantics.POL.Management as POL
 import Data.POL.Observable ( ObservableT, runObservableT )
 import Data.SimPOL.Time as Time ( Zero ( .. ), Discrete ( .. ) )
 import Control.Monad.IO.Class
 import Control.Monad.Trans.Class
 import Control.Monad.Trans.State
+import Control.Parallel ( par )
 import Text.Printf
 import Text.Dialog
 type Management t = ManagementT t IO
@@ -60,6 +61,10 @@ instance (Ord a, Ord p, Ord l, Show a, Show p, Show l, MonadIO m, Show t) => POL
       "1" -> execute c1
       "2" -> execute c2
       _   -> greedy c1 c2
+  parallel c1 c2 = do
+    c1' <- execute c2 `par` execute c1
+    c2' <- execute c2
+    return $ c1' `POL.and` c2'
   ifthenelse o c1 c2 = do
     sw <- runObservableT o
     if sw

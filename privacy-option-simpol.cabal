@@ -32,6 +32,7 @@ library
   build-depends:
     base            >=4.6     && <4.7,
     transformers    >=0.3     && <0.4,
+    parallel      >=3.2     && <3.3,
     xhtml           >=3000.2  && <3000.3,
     readline        >=1.0     && <1.1,
     privacy-option  >=0.1     && <0.2
