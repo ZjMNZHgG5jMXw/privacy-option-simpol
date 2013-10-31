@@ -3,7 +3,7 @@ module Semantics.SimPOL.Management where
 import Language.POL.Syntax
 import Semantics.POL.Management as POL
 import Data.POL.Observable ( ObservableT, runObservableT )
-import Data.POL.Time as Time
+import Data.SimPOL.Time as Time ( Zero ( .. ), Discrete ( .. ) )
 import Control.Monad.IO.Class
 import Control.Monad.Trans.State
 import Text.Printf

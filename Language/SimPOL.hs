@@ -13,13 +13,12 @@ module Language.SimPOL
   ) where
 import Language.POL hiding
   ( Contract
-  , Label
-  , advance )
+  , Label )
 import qualified Language.POL as POL
 import Data.SimPOL.PersonalData
 import Data.SimPOL.Purpose
 import Data.SimPOL.Observable
-import Data.SimPOL.Time
+import Data.SimPOL.Time hiding ( Zero ( .. ), Discrete ( .. ) )
 import Semantics.SimPOL.Management
 import Text.PrettyXHTML ()
 import Text.XHtml as XH hiding ( label, value )

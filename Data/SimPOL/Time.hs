@@ -1,5 +1,8 @@
 module Data.SimPOL.Time where
-import Data.POL.Time
+class Zero a where
+  zero      :: a
+class Discrete a where
+  advance     :: a -> a
 data Timeline = Timeline
   { index   :: Int
   , events  :: [String]
