@@ -1,0 +1,19 @@
+----------------------------------------------------------------------
+
+simPOL package 2013/10/31
+Copyright (c) 2011-2013 Stefan Berthold <stefan.berthold@kau.se>
+
+----------------------------------------------------------------------
+
+Find the documentation on DiVA,
+
+  http://urn.kb.se/resolve?urn=urn:nbn:se:kau:diva-27396 .
+
+Explore simPOL, a simple instance of the Privacy Option Language,
+by loading start.hs in a ghci session.
+
+  $ ghci start.hs
+
+Have fun!
+
+----------------------------------------------------------------------
