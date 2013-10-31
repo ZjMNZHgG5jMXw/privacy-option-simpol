@@ -20,7 +20,7 @@ import Data.SimPOL.Purpose
 import Data.SimPOL.Observable
 import Data.SimPOL.Time hiding ( Zero ( .. ), Discrete ( .. ) )
 import Semantics.SimPOL.Management
-import Text.PrettyXHTML ()
+import Text.PrettyXHTML ( HtmlContract )
 import Text.XHtml as XH hiding ( label, value )
 type Universe = Management Time
 type Obs = Observable Universe
@@ -29,7 +29,7 @@ inspect :: Contract -> IO ()
 inspect c = writeFile "polcontract.html" $ showHtml
   $ h1 << "POL contract inspection"
   XH.+++ h2 << "Human-readable contract"
-  XH.+++ (pretty c :: Html)
+  XH.+++ (pretty c :: HtmlContract)
   XH.+++ h2 << "Machine-readable contract"
   XH.+++ thediv ! [thestyle "font-family:monospace"] << show c
 simulate :: Contract -> IO Contract
