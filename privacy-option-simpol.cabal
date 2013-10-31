@@ -41,6 +41,6 @@ library
 
 source-repository head
   type:     git
-  location: https://github.com/ZjMNZHgG5jMXw/privacy-option.git
+  location: https://github.com/ZjMNZHgG5jMXw/privacy-option-simpol.git
 
 -- vim: ft=cabal:sts=2:sw=2:tw=80:et:nu:ai
