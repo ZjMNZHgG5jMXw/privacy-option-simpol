@@ -16,7 +16,7 @@ import Language.POL hiding
   , PersonalData, attribute, value
   , Purpose, purpose
   , Label
-  , Management, advance )
+  , advance )
 import qualified Language.POL as POL
 import Data.SimPOL.PersonalData
 import Data.SimPOL.Purpose
