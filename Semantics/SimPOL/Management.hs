@@ -5,19 +5,31 @@ import Semantics.POL.Management as POL
 import Data.POL.Observable ( ObservableT, runObservableT )
 import Data.SimPOL.Time as Time ( Zero ( .. ), Discrete ( .. ) )
 import Control.Monad.IO.Class
+import Control.Monad.Trans.Class
 import Control.Monad.Trans.State
 import Text.Printf
 import Text.Dialog
-evolve :: (Monad m, Zero t) => StateT t m a -> m a
+type Management t = ManagementT t IO
+evolve :: (Monad m, Zero t) => ManagementT t m a -> m a
 evolve = evolveWithTime Time.zero
-evolveWithTime :: (Monad m) => t -> StateT t m a -> m a
-evolveWithTime = flip evalStateT
-now :: Monad m => StateT t m t
-now = get
-advance :: (Monad m, Discrete t) => StateT t m ()
-advance = modify Time.advance
-type Management t = StateT t IO
-instance (Ord a, Ord p, Ord l, Show a, Show p, Show l, MonadIO m, Show t) => POL.Management a p l (StateT t m) where
+evolveWithTime :: Monad m => t -> ManagementT t m a -> m a
+evolveWithTime = flip (evalStateT . runManagementT)
+now :: Monad m => ManagementT t m t
+now = ManagementT get
+advance :: (Monad m, Discrete t) => ManagementT t m ()
+advance = ManagementT (modify Time.advance)
+newtype ManagementT t m a = ManagementT { runManagementT :: StateT t m a }
+instance Functor m => Functor (ManagementT t m) where
+  fmap f = ManagementT . fmap f . runManagementT
+instance Monad m => Monad (ManagementT t m) where
+  return  = ManagementT . return
+  m >>= n = ManagementT $ (runManagementT . n =<< runManagementT m)
+  fail    = ManagementT . fail
+instance MonadIO m => MonadIO (ManagementT t m) where
+  liftIO  = lift . liftIO
+instance MonadTrans (ManagementT t) where
+  lift = ManagementT . lift
+instance (Ord a, Ord p, Ord l, Show a, Show p, Show l, MonadIO m, Show t) => POL.Management a p l (ManagementT t m) where
   use a p = do
     t <- now
     liftIO $ putStrLn $ printf ("(%s) Using data %s "
