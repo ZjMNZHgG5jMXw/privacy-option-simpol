@@ -13,8 +13,6 @@ module Language.SimPOL
   ) where
 import Language.POL hiding
   ( Contract
-  , PersonalData, attribute, value
-  , Purpose, purpose
   , Label
   , advance )
 import qualified Language.POL as POL

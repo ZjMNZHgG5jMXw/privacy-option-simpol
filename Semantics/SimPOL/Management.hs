@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleInstances, MultiParamTypeClasses #-}
 module Semantics.SimPOL.Management where
 import Language.POL.Syntax
 import Semantics.POL.Management as POL
@@ -16,7 +17,7 @@ now = get
 advance :: (Monad m, Discrete t) => StateT t m ()
 advance = modify Time.advance
 type Management t = StateT t IO
-instance (MonadIO m, Show t) => POL.Management (StateT t m) where
+instance (Ord a, Ord p, Ord l, Show a, Show p, Show l, MonadIO m, Show t) => POL.Management a p l (StateT t m) where
   use a p = do
     t <- now
     liftIO $ putStrLn $ printf ("(%s) Using data %s "
